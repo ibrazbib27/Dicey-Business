@@ -1,21 +1,19 @@
-const SIZE = "150px";
+
 let die;
 let cont = document.getElementById("container-die");
 class Dice{
     constructor(){
         this.value = this.roll();
         this.div = document.createElement("div");
-       this.div.classList.add("text-center", "px-0", "mx-2", "mb-5", "col", "border", "border-dark", "rounded"); 
-       this.div.innerHTML += `<span class="row  align-content-center my-auto h-100"><span class="col-12"></span><span class="col-12"><h1 class="h-100 m-0">${this.value}</h1></span><span class="col-12"></span></span>`;
-    (this.div.getElementsByClassName("row")[0]).addEventListener("click", () =>{
-            
-            this.div.getElementsByTagName("h1")[0].innerHTML = this.roll();
+       this.div.classList.add("text-center", "px-0", "mx-2", "mb-5", "col", "bg-white", "rounded"); 
+       this.div.innerHTML = `<img src="http://javascriptkit.com/complete/images/d${this.value}.gif"  alt="Responsive image">`;
+    (this.div.getElementsByTagName("img")[0]).addEventListener("click", () =>{
+           this.div.getElementsByTagName("img")[0].src = `http://javascriptkit.com/complete/images/d${this.roll()}.gif`;
         });
-        (this.div.getElementsByClassName("row")[0]).addEventListener('dblclick', () =>{
+        (this.div.getElementsByTagName("img")[0]).addEventListener('dblclick', () =>{
             cont.removeChild(this.div);
         });
-        this.div.style.width = SIZE;
-        this.div.style.height = SIZE;
+       
         cont.append(this.div);
     }
     roll(){
@@ -31,10 +29,11 @@ diebtn.addEventListener("click",() =>{dice = new Dice();} );
 
 
 rrbtn.addEventListener("click",() =>{ 
-    let count = (document.body.getElementsByTagName("h1")).length;
+    let count = (document.body.getElementsByTagName("img")).length;
     if(count > 0){
         for(let i = 0; i < count; i++){
-            document.body.getElementsByTagName("h1")[i].innerHTML = dice.roll();
+            let src = document.body.getElementsByTagName("img")[i].src;
+            document.body.getElementsByTagName("img")[i].src= `http://javascriptkit.com/complete/images/d${dice.roll()}.gif`;
         }
     }
     else
@@ -42,11 +41,12 @@ rrbtn.addEventListener("click",() =>{
        
      } );
 sumbtn.addEventListener("click",() =>{
-       let count = (document.body.getElementsByTagName("h1")).length;
+       let count = (document.body.getElementsByTagName("img")).length;
     let total = 0;
     if(count > 0){
         for(let j = 0; j < count; j++){
-            total += parseInt(document.body.getElementsByTagName("h1")[j].innerHTML); 
+              let src = document.body.getElementsByTagName("img")[j].src;
+            total += parseInt(src.substring((src).indexOf('d') + 1, (src).indexOf('.g'))); 
         }
         alert(`The sum of all the dice values is ${total}.`);
     }
