@@ -1,19 +1,26 @@
 
 let die;
+//row and div element where my dices will be appended to
 let cont = document.getElementById("container-die");
 class Dice{
+    //this works on an indivdual level (works on the specific dice)
     constructor(){
+        //return random dice valuw (1-6)
         this.value = this.roll();
+        //creating individual dice
         this.div = document.createElement("div");
        this.div.classList.add("text-center", "px-0", "mx-2", "mb-5", "col", "bg-white", "rounded"); 
+        //based on the specific dice value I can load an image dice face value w/in this div element; essentially my dice element
        this.div.innerHTML = `<img src="http://javascriptkit.com/complete/images/d${this.value}.gif"  alt="Responsive image">`;
+     //when I click this image w/in the div element I essentially roll again and get a new value and upload a new corresponding image face value as well
     (this.div.getElementsByTagName("img")[0]).addEventListener("click", () =>{
            this.div.getElementsByTagName("img")[0].src = `http://javascriptkit.com/complete/images/d${this.roll()}.gif`;
         });
+        //double clicking an image will remove a div element (dice) all together
         (this.div.getElementsByTagName("img")[0]).addEventListener('dblclick', () =>{
             cont.removeChild(this.div);
         });
-       
+        //div element (dice) appends to the 'dice contaniner'
         cont.append(this.div);
     }
     roll(){
@@ -22,17 +29,24 @@ class Dice{
     }
 }
 
+/* The methods/functions below go affect all dices in the 'dice-container'*/
+
+
+// new dice button
 let diebtn = document.getElementById("newdie");
+// reroll dice button
 let rrbtn = document.getElementById("reroll");
+// sum of all dices button
 let sumbtn = document.getElementById("sum");
+
+//clicking will create an instance of the Dice class 
 diebtn.addEventListener("click",() =>{dice = new Dice();} );
 
-
+//
 rrbtn.addEventListener("click",() =>{ 
     let count = (document.body.getElementsByTagName("img")).length;
     if(count > 0){
         for(let i = 0; i < count; i++){
-            let src = document.body.getElementsByTagName("img")[i].src;
             document.body.getElementsByTagName("img")[i].src= `http://javascriptkit.com/complete/images/d${dice.roll()}.gif`;
         }
     }
